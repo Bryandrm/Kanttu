@@ -1,0 +1,7 @@
+-- CreateTable
+CREATE TABLE "Compra" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "descripcion" TEXT NOT NULL,
+    "monto" REAL NOT NULL,
+    "fecha" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
