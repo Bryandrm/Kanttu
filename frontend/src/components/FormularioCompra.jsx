@@ -6,13 +6,31 @@ function FormularioCompra({ onCompraCreada }) {
   const [categoria, setCategoria] = useState('')
   const [metodoRegistro, setMetodoRegistro] = useState('manual')
   const [mensaje, setMensaje] = useState(null)
+  const [errores, setErrores] = useState({})
+
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!descripcion || !monto) {
-      setMensaje('🛑 Debes ingresar descripción y monto')
+    const nuevosErrores = {}
+
+    if (!descripcion.trim()) {
+      nuevosErrores.descripcion = 'La descripción es obligatoria'
+    }
+  
+    if (!monto || isNaN(monto) || parseFloat(monto) <= 0) {
+      nuevosErrores.monto = 'Ingresa un monto válido'
+    }
+
+    if (!categoria.trim() ) {
+      nuevosErrores.categoria = 'Ingresa una categoría válida'
+    }
+  
+    if (Object.keys(nuevosErrores).length > 0) {
+      setErrores(nuevosErrores)
       return
     }
+  
+    setErrores({})
 
     const nuevaCompra = {
       descripcion,
@@ -57,27 +75,43 @@ function FormularioCompra({ onCompraCreada }) {
         <input
           type="text"
           placeholder="Descripción"
-          className="w-full p-2 border rounded"
+          className={`w-full p-2 border rounded ${
+            errores.descripcion ? 'border-red-500' : ''
+          }`}        
           value={descripcion}
           onChange={(e) => setDescripcion(e.target.value)}
         />
+        {errores.descripcion && (
+          <p className="text-sm text-red-500 mt-1">{errores.descripcion}</p>
+        )}
 
         <input
           type="number"
           step="0.01"
           placeholder="Monto"
-          className="w-full p-2 border rounded"
+          className={`w-full p-2 border rounded ${
+            errores.descripcion ? 'border-red-500' : ''
+          }`}        
           value={monto}
           onChange={(e) => setMonto(e.target.value)}
         />
+        {errores.monto && (
+          <p className="text-sm text-red-500 mt-1">{errores.monto}</p>
+        )}
 
         <input
           type="text"
           placeholder="Categoría"
-          className="w-full p-2 border rounded"
+          className={`w-full p-2 border rounded ${
+            errores.categoria ? 'border-red-500' : ''
+          }`}
+        
           value={categoria}
           onChange={(e) => setCategoria(e.target.value)}
         />
+        {errores.categoria && (
+          <p className="text-sm text-red-500 mt-1">{errores.categoria}</p>
+        )}
 
         <select
           className="w-full p-2 border rounded"

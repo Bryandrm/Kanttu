@@ -5,27 +5,32 @@ import ListaCompras from './components/ListaCompras'
 import FormularioCompra from './components/FormularioCompra'
 import './App.css'
 
-
 function App() {
-  const [mensaje, setMensaje] = useState('Cargando...')
+  const [compras, setCompras] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  const cargarCompras = async () => {
+    setLoading(true)
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/compras`)
+      const data = await res.json()
+      setCompras(data)
+    } catch (err) {
+      console.error('Error al cargar compras:', err)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/health`)
-      .then(response => response.text())
-      .then(data => setMensaje(data))
-      .catch(error => setMensaje('Error al conectar con el backend 🚨'))
+    cargarCompras()
   }, [])
 
   return (
-    // <div className="min-h-screen flex items-center justify-center bg-gray-100 text-2xl font-semibold text-center">
-    //   {mensaje}
-    // </div>
     <div className="min-h-screen bg-gray-100 p-4">
-    <FormularioCompra/>
-    <ListaCompras />
-
-  </div>
-
+      <FormularioCompra onCompraCreada={cargarCompras} />
+      <ListaCompras compras={compras} loading={loading} />
+    </div>
   )
 }
 
