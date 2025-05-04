@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const compraRouter = require('./routes/compraRouter');
+const compraRouter = require('./routes/compraRouter.js');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 

@@ -22,6 +22,6 @@ model Compra {
   fecha          DateTime @default(now())
   categoria      String?
   metodoRegistro String?  // manual / escaneo
-  usuarioId      Int      // Referencia al Usuario
+  usuarioId      Int?      // Referencia al Usuario
   grupoId        Int?     // (opcional) Referencia a Grupo
 }
