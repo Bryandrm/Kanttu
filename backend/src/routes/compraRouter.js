@@ -1,5 +1,8 @@
-const express = require('express');
-const { obtenerCompras, crearCompra } = require('../services/compraService');
+
+import express from 'express';
+import { obtenerCompras } from '../services/compraService.js';
+import { crearCompra } from '../services/compraService.js';
+
 
 const router = express.Router();
 
@@ -25,4 +28,4 @@ router.post('/', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

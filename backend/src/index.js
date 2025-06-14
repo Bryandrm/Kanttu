@@ -1,9 +1,11 @@
 import authRouter from './routes/authRouter.js'
-const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const compraRouter = require('./routes/compraRouter.js');
-const { PrismaClient } = require('@prisma/client');
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { PrismaClient } from '@prisma/client';
+import compraRouter from './routes/compraRouter.js';
+// Importar las dependencias necesarias
+
 const prisma = new PrismaClient();
 
 
