@@ -1,9 +1,11 @@
+import authRouter from './routes/authRouter.js'
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const compraRouter = require('./routes/compraRouter.js');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+
 
 dotenv.config();
 
@@ -39,5 +41,8 @@ const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor escuchando en puerto ${PORT}`);
 });
+
+
+app.use('/auth', authRouter)
 
 app.use('/compras', compraRouter);

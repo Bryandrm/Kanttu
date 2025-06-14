@@ -14,14 +14,20 @@ datasource db {
 }
 
 
-
 model Compra {
   id             Int      @id @default(autoincrement())
   descripcion    String
   monto          Float
   fecha          DateTime @default(now())
   categoria      String?
-  metodoRegistro String?  // manual / escaneo
-  usuarioId      Int?      // Referencia al Usuario
-  grupoId        Int?     // (opcional) Referencia a Grupo
+  metodoRegistro String?
+  usuarioId      Int
+  usuario        Usuario  @relation(fields: [usuarioId], references: [id])
+}
+
+model Usuario {
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  password String
+  compras  Compra[]
 }
